@@ -1,8 +1,11 @@
 package com.example.spring_api.services;
 
 import com.example.spring_api.dto.StudentDTO;
+import com.example.spring_api.dto.StudentImageDTO;
 import com.example.spring_api.models.Student;
+import com.example.spring_api.models.StudentImage;
 import com.example.spring_api.models.XepLoai;
+import com.example.spring_api.repositories.StudentImageRepository;
 import com.example.spring_api.repositories.StudentRepository;
 import com.example.spring_api.responses.StudentResponse;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +13,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.management.InvalidAttributeValueException;
+import java.security.InvalidParameterException;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class StudentService implements IStudentService{
     private final StudentRepository studentRepository;
+    private final StudentImageRepository studentImageRepository;
     @Override
     public Student getStudentByID(Long id) {
         return studentRepository.findById(id).orElse(null);
@@ -90,9 +96,24 @@ public class StudentService implements IStudentService{
         return  studentRepository.search(xepLoai,ten,startYear,endYear);
     }
 
+    @Override
+    public StudentImage saveStudentImage(Long studentId, StudentImageDTO studentImageDTO) {
+        Student student = getStudentByID(studentId);
+        StudentImage studentImage = StudentImage.builder()
+                .student(student)
+                .imageUrl(studentImageDTO.getImageUrl())
+                .build();
+        int size = studentImageRepository.findByStudentId(studentId).size();
+        if(size>=4){
+            throw new InvalidParameterException("Mỗi sinh viên chỉ up tối đa 4 ảnh");
+        }
+        return studentImageRepository.save(studentImage);
+    }
 
-
-
+    @Override
+    public List<StudentImage> getAllStudentImages(Long studentId) {
+        return studentImageRepository.findByStudentId(studentId);
+    }
 
 
 //    @Override

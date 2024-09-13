@@ -1,7 +1,9 @@
 package com.example.spring_api.services;
 
 import com.example.spring_api.dto.StudentDTO;
+import com.example.spring_api.dto.StudentImageDTO;
 import com.example.spring_api.models.Student;
+import com.example.spring_api.models.StudentImage;
 import com.example.spring_api.models.XepLoai;
 import com.example.spring_api.responses.StudentResponse;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,10 @@ public interface IStudentService {
     List<Student> findByXepLoai(XepLoai xepLoai);
     List<Student> findByNgaySinhBetween(int startYear,int endYear);
     List<Student> searchStudent(XepLoai xepLoai,String ten, int startYear,int endYear);
+
+    //Image student
+    StudentImage saveStudentImage(Long studentId, StudentImageDTO studentImageDTO);
+    List<StudentImage> getAllStudentImages(Long studentId);
 
 //    Page<CategoryResponse> getAllCategory(PageRequest pageRequest);
 }
