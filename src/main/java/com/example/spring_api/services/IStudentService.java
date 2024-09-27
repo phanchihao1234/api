@@ -31,5 +31,7 @@ public interface IStudentService {
     StudentImage saveStudentImage(Long studentId, StudentImageDTO studentImageDTO);
     List<StudentImage> getAllStudentImages(Long studentId);
 
+    List<StudentImage> getAllStudentImages2(Long studentId) ;
+
 //    Page<CategoryResponse> getAllCategory(PageRequest pageRequest);
 }

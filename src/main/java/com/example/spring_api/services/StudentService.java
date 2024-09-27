@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.management.InvalidAttributeValueException;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -113,6 +114,11 @@ public class StudentService implements IStudentService{
     @Override
     public List<StudentImage> getAllStudentImages(Long studentId) {
         return studentImageRepository.findByStudentId(studentId);
+    }
+    @Override
+    public List<StudentImage> getAllStudentImages2(Long studentId) {
+        StudentImage studentImage = studentImageRepository.findByStudentId(studentId);
+        return student;
     }
 
 
